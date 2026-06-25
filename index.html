@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Debiti Formativi &middot; Istituto Professionale &middot; Scrutinio Finale 2025/2026 &middot; IIS Mendel</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.3.0/highcharts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.3.0/highcharts-3d.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.3.0/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/11.3.0/modules/accessibility.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',sans-serif;color:#ffffff;min-height:100vh;overflow-x:hidden;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(217,119,6,.30), transparent 45%),
+    radial-gradient(circle at 88% 8%, rgba(13,148,136,.42), transparent 45%),
+    radial-gradient(circle at 50% 92%, rgba(190,60,60,.20), transparent 50%),
+    linear-gradient(160deg, #07191c 0%, #0c2a26 35%, #0a2436 70%, #071a22 100%);
+  background-size:200% 200%;
+  animation:meshmove 24s ease-in-out infinite;
+  position:relative;
+}
+@keyframes meshmove{0%{background-position:0% 0%;}50%{background-position:100% 60%;}100%{background-position:0% 0%;}}
+
+.particles{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.particle{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.85),rgba(255,255,255,0));
+  filter:blur(1px);opacity:.45;animation:floaty linear infinite;}
+@keyframes floaty{0%{transform:translateY(0) translateX(0);opacity:0;}10%{opacity:.55;}90%{opacity:.45;}100%{transform:translateY(-100vh) translateX(40px);opacity:0;}}
+
+.wrap{max-width:1260px;margin:0 auto;padding:0 28px;position:relative;z-index:2;}
+
+header.top{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(7,17,20,.62);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.10);}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;}
+.brand{display:flex;align-items:center;gap:13px;}
+.brand .mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(140deg,#fbbf24,#2dd4bf);
+  display:flex;align-items:center;justify-content:center;font-size:18px;color:#0a1f1c;box-shadow:0 0 22px rgba(45,212,191,.55);}
+.brand h1{font-family:'Fraunces',serif;font-weight:700;font-size:1.18rem;margin:0;line-height:1.1;color:#fff;}
+.brand p{margin:0;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#cdeee8;font-weight:700;}
+.tools{display:flex;gap:10px;}
+.btn{border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.08);color:#fff;border-radius:11px;padding:9px 16px;
+  font-size:.83rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.2s;font-family:'Inter';}
+.btn:hover{background:rgba(45,212,191,.30);box-shadow:0 0 18px rgba(45,212,191,.45);transform:translateY(-1px);}
+.btn.icon{padding:9px 12px;}
+
+main{padding-top:108px;padding-bottom:90px;}
+
+.hero{text-align:center;max-width:780px;margin:0 auto 30px;}
+.eyebrow{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:#fbbf24;font-weight:800;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:center;gap:10px;}
+.eyebrow .line{width:30px;height:1px;background:#fbbf24;opacity:.8;}
+.hero h2{font-family:'Fraunces',serif;font-weight:800;font-size:3.1rem;line-height:1.06;margin:0 0 16px;letter-spacing:-.01em;color:#fff;
+  text-shadow:0 2px 30px rgba(45,212,191,.4);}
+.hero p{color:#dff5f0;font-size:1.08rem;line-height:1.55;margin:0;}
+.hero p b{color:#fff;}
+
+.tabbar{display:flex;justify-content:center;gap:10px;margin:0 auto 34px;}
+.tabbtn{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#dff5f0;border-radius:999px;
+  padding:11px 22px;font-size:.92rem;font-weight:700;cursor:pointer;transition:.2s;font-family:'Inter';display:flex;align-items:center;gap:8px;}
+.tabbtn:hover{background:rgba(255,255,255,.12);}
+.tabbtn.active{background:linear-gradient(120deg,#fbbf24,#2dd4bf);color:#0a1f1c;border-color:transparent;box-shadow:0 6px 20px -4px rgba(45,212,191,.6);}
+.tabpanel{display:none;}
+.tabpanel.active{display:block;}
+
+.grid{display:grid;gap:22px;}
+.g-4{grid-template-columns:repeat(4,1fr);}
+.g-3{grid-template-columns:2fr 3fr;}
+.g-2{grid-template-columns:1fr 1fr;}
+.g-3p{grid-template-columns:repeat(3,1fr);}
+@media (max-width:980px){
+  .g-4{grid-template-columns:repeat(2,1fr);}
+  .g-3,.g-2,.g-3p{grid-template-columns:1fr;}
+}
+
+.glass{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:22px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset, 0 25px 50px -20px rgba(0,0,0,.55);
+  padding:28px;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+}
+.glass.hoverable:hover{transform:translateY(-5px);box-shadow:0 1px 0 rgba(255,255,255,.2) inset, 0 32px 55px -20px rgba(45,212,191,.35);}
+.glass::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 40%);pointer-events:none;}
+
+.section-block{margin-bottom:36px;}
+.card h3.ttl{font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;margin:0 0 4px;position:relative;z-index:1;color:#fff;}
+.card p.sub{color:#cdeee8;font-size:.9rem;margin:0 0 18px;line-height:1.45;position:relative;z-index:1;}
+
+.kpi .ico{position:absolute;right:22px;top:24px;width:42px;height:42px;border-radius:13px;display:flex;align-items:center;
+  justify-content:center;font-size:1.15rem;z-index:1;}
+.kpi .lbl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#cdeee8;font-weight:700;margin-bottom:12px;position:relative;z-index:1;}
+.kpi .val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.7rem;line-height:1;letter-spacing:-.01em;position:relative;z-index:1;
+  animation:pulseval 3.4s ease-in-out infinite;}
+@keyframes pulseval{0%,100%{transform:scale(1);}50%{transform:scale(1.035);}}
+.kpi .ft{font-size:.8rem;color:#cdeee8;margin-top:10px;position:relative;z-index:1;font-weight:600;}
+.kpi.k-total .val{color:#ffffff;}
+.kpi.k-sd .val{color:#34d399;text-shadow:0 0 18px rgba(52,211,153,.4);}
+.kpi.k-cd .val{color:#fb923c;text-shadow:0 0 18px rgba(251,146,60,.4);}
+.kpi.k-non .val{color:#f87171;text-shadow:0 0 18px rgba(248,113,113,.4);}
+.kpi.k-total .ico{background:rgba(255,255,255,.12);color:#fff;}
+.kpi.k-sd .ico{background:rgba(52,211,153,.18);color:#34d399;}
+.kpi.k-cd .ico{background:rgba(251,146,60,.18);color:#fb923c;}
+.kpi.k-non .ico{background:rgba(248,113,113,.18);color:#f87171;}
+
+.note{font-size:.85rem;color:#dff5f0;margin-top:16px;line-height:1.55;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;position:relative;z-index:1;}
+.note i{color:#fbbf24;margin-right:6px;}
+.callout{background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:16px 20px;font-size:.88rem;
+  line-height:1.6;color:#fff3da;position:relative;z-index:1;margin-bottom:0;}
+.callout i{color:#fbbf24;margin-right:8px;}
+
+table.report-table{width:100%;border-collapse:collapse;font-size:.91rem;position:relative;z-index:1;}
+table.report-table th{text-align:left;padding:11px 10px;font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;color:#cdeee8;
+  border-bottom:1px solid rgba(255,255,255,.16);font-weight:800;white-space:nowrap;}
+table.report-table td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.09);white-space:nowrap;}
+table.report-table tbody tr:hover td{background:rgba(255,255,255,.045);}
+table.report-table td.cl{font-family:'Space Grotesk',sans-serif;font-weight:700;}
+table.report-table td.pct{font-family:'Space Grotesk',sans-serif;font-weight:600;}
+
+.badge{display:inline-block;padding:4px 11px;border-radius:999px;font-weight:800;font-size:.74rem;font-family:'Space Grotesk',sans-serif;}
+.badge-sd{background:rgba(52,211,153,.20);color:#34d399;}
+.badge-cd{background:rgba(251,146,60,.20);color:#fb923c;}
+.badge-non{background:rgba(248,113,113,.20);color:#f87171;}
+.badge-rit{background:rgba(148,163,184,.20);color:#94a3b8;}
+
+.bar-mini{height:8px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden;display:flex;}
+
+.prio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;margin-top:6px;position:relative;z-index:1;}
+.prio-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px;
+  border-top:3px solid var(--pc);transition:.25s;}
+.prio-card:hover{transform:translateY(-4px);background:rgba(255,255,255,.09);}
+.prio-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.prio-tag{font-size:.62rem;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px;}
+.prio-classi{font-size:.7rem;color:#cdeee8;font-weight:600;}
+.prio-card h4{font-family:'Fraunces',serif;font-size:1.15rem;margin:0 0 10px;font-weight:700;color:#fff;}
+.prio-nums{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
+.prio-big{font-family:'Space Grotesk',sans-serif;font-size:2.1rem;font-weight:700;color:var(--pc);}
+.prio-sub{font-size:.76rem;color:#cdeee8;}
+.prio-bar{height:6px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;margin-bottom:8px;}
+.prio-bar-fill{height:100%;border-radius:4px;}
+.prio-foot{font-size:.74rem;color:#a9c9c2;margin:0;}
+
+.class-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;position:relative;z-index:1;margin-top:6px;}
+.class-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:18px;transition:.25s;}
+.class-card:hover{background:rgba(255,255,255,.09);transform:translateY(-3px);}
+.class-card .cc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
+.class-card h4{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;margin:0;font-weight:700;color:#fff;}
+.class-card .cc-ind{font-size:.68rem;color:#cdeee8;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.class-card .cc-pct{font-size:.78rem;font-weight:800;font-family:'Space Grotesk',sans-serif;}
+.class-card .cc-badges{display:flex;gap:6px;margin:10px 0 10px;flex-wrap:wrap;}
+.class-card .cc-subjlist{font-size:.78rem;color:#e3f6f1;line-height:1.6;margin:0;}
+.class-card .cc-subjlist b{color:#fff;}
+.class-card .cc-empty{font-size:.8rem;color:#34d399;font-weight:700;}
+
+footer.pg{text-align:center;font-size:.8rem;color:#a9c9c2;margin-top:54px;position:relative;z-index:1;line-height:1.7;}
+footer.pg .credit{display:block;margin-top:6px;opacity:.85;}
+
+@media print{
+  body{background:white !important;color:#161a10;animation:none;}
+  .particles{display:none;}
+  .tabbar{display:none;}
+  .tabpanel{display:block !important;}
+  .glass{background:white !important;border:1px solid #ddd;box-shadow:none;backdrop-filter:none;color:#161a10;}
+  .no-print{display:none !important;}
+  .pgbreak{break-before:page;}
+  .hero h2{color:#0a1f1c;text-shadow:none;}
+  .kpi .val{animation:none;text-shadow:none;}
+}
+@keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.in{animation:up .7s cubic-bezier(.2,.8,.2,1) both;}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark"><i class="fas fa-tractor"></i></div>
+      <div>
+        <h1>IIS &ldquo;Gregorio Mendel&rdquo;</h1>
+        <p>Villa Cortese &middot; Istituto Professionale Agricoltura</p>
+      </div>
+    </div>
+    <div class="tools no-print">
+      <button class="btn icon" onclick="window.print()" title="Stampa / PDF"><i class="fas fa-print"></i></button>
+      <button class="btn" onclick="window.print()"><i class="fas fa-file-pdf"></i>Esporta PDF</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero in">
+    <p class="eyebrow"><span class="line"></span>&#127881; Collegio Docenti &middot; 30 giugno 2026<span class="line"></span></p>
+    <h2>Report Debiti Formativi</h2>
+    <p>Scrutinio finale &middot; II quadrimestre &middot; A.S. 2025/2026<br>Istituto Professionale &ldquo;Agricoltura, Sviluppo Rurale e Gestione Risorse Forestali&rdquo; (IP11) &middot; <b>144 studenti scrutinati</b></p>
+  </div>
+
+  <div class="tabbar no-print in" style="animation-delay:.05s">
+    <button class="tabbtn active" id="tabbtn-finale" onclick="showTab('finale')"><i class="fas fa-chart-pie"></i>Scrutinio Finale</button>
+    <button class="tabbtn" id="tabbtn-confronto" onclick="showTab('confronto')"><i class="fas fa-arrows-left-right"></i>Confronto I &rarr; II Quadrimestre</button>
+  </div>
+
+  <!-- ============ TAB 1 ============ -->
+  <div class="tabpanel active" id="tab-finale">
+
+    <div class="glass section-block in" style="animation-delay:.04s">
+      <p class="callout"><i class="fas fa-circle-info"></i>A differenza del Tecnico, l&rsquo;ordinamento dei percorsi <b>professionali</b> non prevede la sospensione del giudizio: gli studenti possono essere ammessi alla classe successiva anche con valutazioni insufficienti, che restano comunque debiti da recuperare. Sono inoltre esclusi dai conteggi 5 studenti ritirati nel corso dell&rsquo;anno (dati non disponibili).</p>
+    </div>
+
+    <div class="grid g-4 section-block in" style="animation-delay:.05s">
+      <div class="glass hoverable kpi k-total">
+        <div class="ico"><i class="fas fa-users"></i></div>
+        <p class="lbl">Studenti scrutinati</p>
+        <h3 class="val">144</h3>
+        <p class="ft">10 classi &middot; 1&deg;&ndash;4&deg; anno</p>
+      </div>
+      <div class="glass hoverable kpi k-sd">
+        <div class="ico"><i class="fas fa-seedling"></i></div>
+        <p class="lbl">Ammessi senza debiti</p>
+        <h3 class="val">68</h3>
+        <p class="ft">47.2% del totale</p>
+      </div>
+      <div class="glass hoverable kpi k-cd">
+        <div class="ico"><i class="fas fa-triangle-exclamation"></i></div>
+        <p class="lbl">Ammessi con debiti</p>
+        <h3 class="val">73</h3>
+        <p class="ft">50.7% &middot; da recuperare</p>
+      </div>
+      <div class="glass hoverable kpi k-non">
+        <div class="ico"><i class="fas fa-circle-xmark"></i></div>
+        <p class="lbl">Non ammessi</p>
+        <h3 class="val">3</h3>
+        <p class="ft">2.1% del totale</p>
+      </div>
+    </div>
+
+    <div class="grid g-3 section-block in" style="animation-delay:.1s">
+      <div class="glass hoverable">
+        <h3 class="ttl">&#127919; Esiti complessivi</h3>
+        <p class="sub">Distribuzione 3D degli esiti sul totale studenti</p>
+        <div id="chart-donut" style="height:320px;position:relative;z-index:1;"></div>
+      </div>
+      <div class="glass hoverable">
+        <h3 class="ttl">&#128202; Esiti per classe</h3>
+        <p class="sub">Percentuale studenti per esito, classe per classe (ordine 1&deg;&rarr;4&deg;)</p>
+        <div id="chart-classes" style="height:320px;position:relative;z-index:1;"></div>
+      </div>
+    </div>
+
+    <div class="glass hoverable section-block in pgbreak" style="animation-delay:.15s">
+      <h3 class="ttl">&#128293; Materie con pi&ugrave; debiti</h3>
+      <p class="sub">Confronto numero insufficienze: I quadrimestre (in itinere) vs. debiti residui allo scrutinio finale</p>
+      <div id="chart-subjects" style="height:440px;position:relative;z-index:1;"></div>
+      <p class="note"><i class="fas fa-circle-info"></i>Il calo complessivo da 316 a 175 insufficienze (-44.6%) riflette il recupero in itinere durante il II quadrimestre.</p>
+    </div>
+
+    <div class="grid g-2 section-block in" style="animation-delay:.2s">
+      <div class="glass hoverable">
+        <h3 class="ttl">&#127891; Debiti per anno di corso</h3>
+        <p class="sub">Confronto trasversale tra i quattro anni (in percentuale)</p>
+        <div id="chart-anno" style="height:320px;position:relative;z-index:1;"></div>
+      </div>
+      <div class="glass hoverable">
+        <h3 class="ttl">&#128194; Debiti per sezione</h3>
+        <p class="sub">Confronto tra le sezioni A, B e C (tutti gli anni)</p>
+        <div id="chart-sezione" style="height:320px;position:relative;z-index:1;"></div>
+      </div>
+    </div>
+
+    <div class="glass hoverable section-block in" style="animation-delay:.25s">
+      <h3 class="ttl">&#129518; Quanti debiti per studente?</h3>
+      <p class="sub">Numero di materie insufficienti tra gli studenti ammessi con debiti o non ammessi</p>
+      <div id="chart-ndebiti" style="height:280px;position:relative;z-index:1;"></div>
+    </div>
+
+    <div class="section-block in pgbreak" style="animation-delay:.3s">
+      <h3 class="ttl" style="margin-bottom:4px;">&#127919; Aree prioritarie per il recupero estivo</h3>
+      <p class="sub" style="margin-bottom:18px;">Materie ordinate per debiti residui: dove concentrare corsi di recupero e sportelli</p>
+      <div class="prio-grid">
+        <div class="prio-card" style="--pc:#fb7185">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb718525;color:#fb7185">PRIORIT&Agrave; ALTA</span>
+        <span class="prio-classi">10 classi</span>
+      </div>
+      <h4>Matematica</h4>
+      <div class="prio-nums">
+        <span class="prio-big">34</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:39%;background:#fb7185"></div></div>
+      <p class="prio-foot">39% gi&agrave; recuperato dal I quadrimestre (56&rarr;34)</p>
+    </div>
+<div class="prio-card" style="--pc:#fb7185">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb718525;color:#fb7185">PRIORIT&Agrave; ALTA</span>
+        <span class="prio-classi">7 classi</span>
+      </div>
+      <h4>Storia</h4>
+      <div class="prio-nums">
+        <span class="prio-big">31</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:16%;background:#fb7185"></div></div>
+      <p class="prio-foot">16% gi&agrave; recuperato dal I quadrimestre (37&rarr;31)</p>
+    </div>
+<div class="prio-card" style="--pc:#fb7185">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb718525;color:#fb7185">PRIORIT&Agrave; ALTA</span>
+        <span class="prio-classi">8 classi</span>
+      </div>
+      <h4>Inglese</h4>
+      <div class="prio-nums">
+        <span class="prio-big">28</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:36%;background:#fb7185"></div></div>
+      <p class="prio-foot">36% gi&agrave; recuperato dal I quadrimestre (44&rarr;28)</p>
+    </div>
+<div class="prio-card" style="--pc:#fb7185">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb718525;color:#fb7185">PRIORIT&Agrave; ALTA</span>
+        <span class="prio-classi">5 classi</span>
+      </div>
+      <h4>Italiano</h4>
+      <div class="prio-nums">
+        <span class="prio-big">23</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:26%;background:#fb7185"></div></div>
+      <p class="prio-foot">26% gi&agrave; recuperato dal I quadrimestre (31&rarr;23)</p>
+    </div>
+<div class="prio-card" style="--pc:#fb7185">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb718525;color:#fb7185">PRIORIT&Agrave; ALTA</span>
+        <span class="prio-classi">7 classi</span>
+      </div>
+      <h4>Chimica</h4>
+      <div class="prio-nums">
+        <span class="prio-big">18</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:67%;background:#fb7185"></div></div>
+      <p class="prio-foot">67% gi&agrave; recuperato dal I quadrimestre (54&rarr;18)</p>
+    </div>
+<div class="prio-card" style="--pc:#fb7185">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb718525;color:#fb7185">PRIORIT&Agrave; ALTA</span>
+        <span class="prio-classi">6 classi</span>
+      </div>
+      <h4>Biologia</h4>
+      <div class="prio-nums">
+        <span class="prio-big">17</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:37%;background:#fb7185"></div></div>
+      <p class="prio-foot">37% gi&agrave; recuperato dal I quadrimestre (27&rarr;17)</p>
+    </div>
+        <div class="prio-card" style="--pc:#fb923c">
+      <div class="prio-top">
+        <span class="prio-tag" style="background:#fb923c25;color:#fb923c">PRIORIT&Agrave; MEDIA</span>
+        <span class="prio-classi">6 classi</span>
+      </div>
+      <h4>Ecologia</h4>
+      <div class="prio-nums">
+        <span class="prio-big">14</span>
+        <span class="prio-sub">debiti residui</span>
+      </div>
+      <div class="prio-bar"><div class="prio-bar-fill" style="width:53%;background:#fb923c"></div></div>
+      <p class="prio-foot">53% gi&agrave; recuperato dal I quadrimestre (30&rarr;14)</p>
+    </div>
+      </div>
+    </div>
+
+    <div class="section-block in pgbreak" style="animation-delay:.32s">
+      <h3 class="ttl" style="margin-bottom:4px;">&#128218; Situazione di ogni classe</h3>
+      <p class="sub" style="margin-bottom:18px;">Esiti, percentuali e materie con debiti, classe per classe</p>
+      <div class="class-grid" id="class-cards"></div>
+    </div>
+
+    <div class="glass hoverable section-block in pgbreak" style="animation-delay:.35s">
+      <h3 class="ttl">&#128203; Riepilogo numerico per classe</h3>
+      <p class="sub">Esiti, percentuali e debiti complessivi, classe per classe</p>
+      <div style="overflow-x:auto;position:relative;z-index:1;">
+        <table class="report-table" id="class-table"></table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ TAB 2 ============ -->
+  <div class="tabpanel" id="tab-confronto">
+
+    <div class="grid g-3p section-block in" style="animation-delay:.05s">
+      <div class="glass hoverable kpi k-total">
+        <div class="ico"><i class="fas fa-layer-group"></i></div>
+        <p class="lbl">Insufficienze I Quadrimestre</p>
+        <h3 class="val">316</h3>
+        <p class="ft">rilevazione in itinere</p>
+      </div>
+      <div class="glass hoverable kpi k-cd">
+        <div class="ico"><i class="fas fa-flag-checkered"></i></div>
+        <p class="lbl">Debiti scrutinio finale</p>
+        <h3 class="val">175</h3>
+        <p class="ft">residui a fine anno</p>
+      </div>
+      <div class="glass hoverable kpi k-sd">
+        <div class="ico"><i class="fas fa-arrow-trend-down"></i></div>
+        <p class="lbl">Variazione complessiva</p>
+        <h3 class="val">-44.6%</h3>
+        <p class="ft">recupero nel II quadrimestre</p>
+      </div>
+    </div>
+
+    <div class="glass hoverable section-block in" style="animation-delay:.1s">
+      <h3 class="ttl">&#128201; Andamento per le materie pi&ugrave; critiche</h3>
+      <p class="sub">Le 6 materie con pi&ugrave; debiti: evoluzione delle insufficienze tra i due quadrimestri</p>
+      <div id="chart-area" style="height:380px;position:relative;z-index:1;"></div>
+    </div>
+
+    <div class="glass hoverable section-block in pgbreak" style="animation-delay:.15s">
+      <h3 class="ttl">&#128202; Confronto per classe</h3>
+      <p class="sub">Insufficienze in itinere (I quadrimestre) vs. debiti residui (scrutinio finale), classe per classe</p>
+      <div id="chart-classcompare" style="height:420px;position:relative;z-index:1;"></div>
+    </div>
+
+    <div class="glass hoverable section-block in pgbreak" style="animation-delay:.2s">
+      <h3 class="ttl">&#128203; Tabella di confronto per classe</h3>
+      <p class="sub">Variazione assoluta e percentuale tra I e II quadrimestre</p>
+      <div style="overflow-x:auto;position:relative;z-index:1;">
+        <table class="report-table" id="compare-table"></table>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pg no-print">
+    Report generato dai tabelloni di scrutinio finale (II quadrimestre, A.S. 2025/2026) &middot; dati aggregati, nessun nominativo<br>
+    IIS &ldquo;Gregorio Mendel&rdquo; &middot; Villa Cortese &middot; Istituto Professionale Agricoltura
+    <span class="credit">Pagina realizzata dal Team Digitale dell&rsquo;Istituto</span>
+  </footer>
+</main>
+
+<script>
+const D = {"classOrder": ["1PA", "1PB", "1PC", "2PA", "2PB", "3PA", "3PB", "3PC", "4PA", "4PB"], "esitiByClass": {"1PA": {"AMMESSO_SENZA_DEBITI": 2, "AMMESSO_CON_DEBITI": 12, "NON_AMMESSO": 0, "RITIRATO": 0, "ALTRO": 0}, "1PB": {"AMMESSO_SENZA_DEBITI": 7, "AMMESSO_CON_DEBITI": 6, "NON_AMMESSO": 0, "RITIRATO": 0, "ALTRO": 0}, "1PC": {"AMMESSO_SENZA_DEBITI": 7, "AMMESSO_CON_DEBITI": 6, "NON_AMMESSO": 1, "RITIRATO": 0, "ALTRO": 0}, "2PA": {"AMMESSO_SENZA_DEBITI": 2, "AMMESSO_CON_DEBITI": 13, "NON_AMMESSO": 1, "RITIRATO": 0, "ALTRO": 0}, "2PB": {"AMMESSO_SENZA_DEBITI": 10, "AMMESSO_CON_DEBITI": 7, "NON_AMMESSO": 0, "RITIRATO": 0, "ALTRO": 0}, "3PA": {"AMMESSO_SENZA_DEBITI": 6, "AMMESSO_CON_DEBITI": 8, "NON_AMMESSO": 0, "RITIRATO": 0, "ALTRO": 0}, "3PB": {"AMMESSO_SENZA_DEBITI": 9, "AMMESSO_CON_DEBITI": 8, "NON_AMMESSO": 0, "RITIRATO": 0, "ALTRO": 0}, "3PC": {"AMMESSO_SENZA_DEBITI": 7, "AMMESSO_CON_DEBITI": 8, "NON_AMMESSO": 0, "RITIRATO": 0, "ALTRO": 0}, "4PA": {"AMMESSO_SENZA_DEBITI": 10, "AMMESSO_CON_DEBITI": 1, "NON_AMMESSO": 1, "RITIRATO": 2, "ALTRO": 0}, "4PB": {"AMMESSO_SENZA_DEBITI": 8, "AMMESSO_CON_DEBITI": 4, "NON_AMMESSO": 0, "RITIRATO": 3, "ALTRO": 0}}, "q2ByClass": {"1PA": 34, "1PB": 11, "1PC": 10, "2PA": 49, "2PB": 12, "3PA": 14, "3PB": 12, "3PC": 20, "4PA": 8, "4PB": 5}, "q1ByClass": {"1PA": 49, "1PB": 10, "1PC": 15, "2PA": 49, "2PB": 17, "3PA": 27, "3PB": 50, "3PC": 41, "4PA": 28, "4PB": 30}, "subjRows": [["MATEMATICA", "Matematica", 56, 34], ["STORIA", "Storia", 37, 31], ["INGLESE", "Inglese", 44, 28], ["ITALIANO", "Italiano", 31, 23], ["CHIMICA", "Chimica", 54, 18], ["BIOLOGIA", "Biologia", 27, 17], ["ECOLOGIA", "Ecologia", 30, 14], ["ECON AGR SVIL TERRIT", "Econ.Agr.Svil.Territ.", 7, 4], ["FISICA", "Fisica", 11, 2], ["ESERC.AGRARIE", "Eserc. Agrarie", 7, 2], ["PRODUZIONI ANIMALI", "Prod. Animali", 1, 1], ["ES.AGR.ALTERNANZA", "Es.Agr.Alternanza", 1, 1], ["EDUCAZIONE CIVICA", "Ed. Civica", 4, 0], ["DIRITTO ECON.", "Diritto Econ.", 1, 0], ["SCIENZE MOTORIE", "Sc. Motorie", 5, 0]], "subjFull": [{"full": "MATEMATICA", "short": "Matematica", "q1": 56, "q2": 34, "delta": -22, "n_classi": 10, "prio": "alta"}, {"full": "STORIA", "short": "Storia", "q1": 37, "q2": 31, "delta": -6, "n_classi": 7, "prio": "alta"}, {"full": "INGLESE", "short": "Inglese", "q1": 44, "q2": 28, "delta": -16, "n_classi": 8, "prio": "alta"}, {"full": "ITALIANO", "short": "Italiano", "q1": 31, "q2": 23, "delta": -8, "n_classi": 5, "prio": "alta"}, {"full": "CHIMICA", "short": "Chimica", "q1": 54, "q2": 18, "delta": -36, "n_classi": 7, "prio": "alta"}, {"full": "BIOLOGIA", "short": "Biologia", "q1": 27, "q2": 17, "delta": -10, "n_classi": 6, "prio": "alta"}, {"full": "ECOLOGIA", "short": "Ecologia", "q1": 30, "q2": 14, "delta": -16, "n_classi": 6, "prio": "media"}, {"full": "ECON AGR SVIL TERRIT", "short": "Econ.Agr.Svil.Territ.", "q1": 7, "q2": 4, "delta": -3, "n_classi": 1, "prio": "bassa"}, {"full": "FISICA", "short": "Fisica", "q1": 11, "q2": 2, "delta": -9, "n_classi": 2, "prio": "bassa"}, {"full": "ESERC.AGRARIE", "short": "Eserc. Agrarie", "q1": 7, "q2": 2, "delta": -5, "n_classi": 2, "prio": "bassa"}, {"full": "PRODUZIONI ANIMALI", "short": "Prod. Animali", "q1": 1, "q2": 1, "delta": 0, "n_classi": 1, "prio": "bassa"}, {"full": "ES.AGR.ALTERNANZA", "short": "Es.Agr.Alternanza", "q1": 1, "q2": 1, "delta": 0, "n_classi": 1, "prio": "bassa"}, {"full": "EDUCAZIONE CIVICA", "short": "Ed. Civica", "q1": 4, "q2": 0, "delta": -4, "n_classi": 0, "prio": "bassa"}, {"full": "DIRITTO ECON.", "short": "Diritto Econ.", "q1": 1, "q2": 0, "delta": -1, "n_classi": 0, "prio": "bassa"}, {"full": "SCIENZE MOTORIE", "short": "Sc. Motorie", "q1": 5, "q2": 0, "delta": -5, "n_classi": 0, "prio": "bassa"}], "byAnno": {"Classi Prime": {"AMMESSO_SENZA_DEBITI": 16, "AMMESSO_CON_DEBITI": 24, "NON_AMMESSO": 1, "RITIRATO": 0}, "Classi Seconde": {"AMMESSO_SENZA_DEBITI": 12, "AMMESSO_CON_DEBITI": 20, "NON_AMMESSO": 1, "RITIRATO": 0}, "Classi Terze": {"AMMESSO_SENZA_DEBITI": 22, "AMMESSO_CON_DEBITI": 24, "NON_AMMESSO": 0, "RITIRATO": 0}, "Classi Quarte": {"AMMESSO_SENZA_DEBITI": 18, "AMMESSO_CON_DEBITI": 5, "NON_AMMESSO": 1, "RITIRATO": 5}}, "bySezione": {"A": {"AMMESSO_SENZA_DEBITI": 20, "AMMESSO_CON_DEBITI": 34, "NON_AMMESSO": 2, "RITIRATO": 2}, "B": {"AMMESSO_SENZA_DEBITI": 34, "AMMESSO_CON_DEBITI": 25, "NON_AMMESSO": 0, "RITIRATO": 3}, "C": {"AMMESSO_SENZA_DEBITI": 14, "AMMESSO_CON_DEBITI": 14, "NON_AMMESSO": 1, "RITIRATO": 0}}, "nDebitiDistrib": {"3": 12, "4": 7, "2": 19, "1": 29, "5": 6, "7": 2}, "classSubjectDebiti": {"1PA": [{"full": "STORIA", "short": "Storia", "n": 9}, {"full": "ITALIANO", "short": "Italiano", "n": 8}, {"full": "MATEMATICA", "short": "Matematica", "n": 7}, {"full": "INGLESE", "short": "Inglese", "n": 4}, {"full": "CHIMICA", "short": "Chimica", "n": 3}, {"full": "BIOLOGIA", "short": "Biologia", "n": 3}], "1PB": [{"full": "MATEMATICA", "short": "Matematica", "n": 4}, {"full": "CHIMICA", "short": "Chimica", "n": 2}, {"full": "BIOLOGIA", "short": "Biologia", "n": 2}, {"full": "ECOLOGIA", "short": "Ecologia", "n": 1}, {"full": "ITALIANO", "short": "Italiano", "n": 1}, {"full": "INGLESE", "short": "Inglese", "n": 1}], "1PC": [{"full": "BIOLOGIA", "short": "Biologia", "n": 4}, {"full": "MATEMATICA", "short": "Matematica", "n": 3}, {"full": "INGLESE", "short": "Inglese", "n": 2}, {"full": "STORIA", "short": "Storia", "n": 1}], "2PA": [{"full": "ITALIANO", "short": "Italiano", "n": 11}, {"full": "STORIA", "short": "Storia", "n": 11}, {"full": "MATEMATICA", "short": "Matematica", "n": 8}, {"full": "ECOLOGIA", "short": "Ecologia", "n": 7}, {"full": "CHIMICA", "short": "Chimica", "n": 5}, {"full": "INGLESE", "short": "Inglese", "n": 4}, {"full": "BIOLOGIA", "short": "Biologia", "n": 2}, {"full": "ESERC.AGRARIE", "short": "Eserc. Agrarie", "n": 1}], "2PB": [{"full": "BIOLOGIA", "short": "Biologia", "n": 3}, {"full": "MATEMATICA", "short": "Matematica", "n": 3}, {"full": "STORIA", "short": "Storia", "n": 3}, {"full": "ITALIANO", "short": "Italiano", "n": 2}, {"full": "ECOLOGIA", "short": "Ecologia", "n": 1}], "3PA": [{"full": "INGLESE", "short": "Inglese", "n": 7}, {"full": "CHIMICA", "short": "Chimica", "n": 3}, {"full": "FISICA", "short": "Fisica", "n": 1}, {"full": "ECOLOGIA", "short": "Ecologia", "n": 1}, {"full": "STORIA", "short": "Storia", "n": 1}, {"full": "MATEMATICA", "short": "Matematica", "n": 1}], "3PB": [{"full": "STORIA", "short": "Storia", "n": 5}, {"full": "ECON AGR SVIL TERRIT", "short": "Econ.Agr.Svil.Territ.", "n": 4}, {"full": "CHIMICA", "short": "Chimica", "n": 1}, {"full": "MATEMATICA", "short": "Matematica", "n": 1}, {"full": "INGLESE", "short": "Inglese", "n": 1}], "3PC": [{"full": "INGLESE", "short": "Inglese", "n": 7}, {"full": "MATEMATICA", "short": "Matematica", "n": 4}, {"full": "ECOLOGIA", "short": "Ecologia", "n": 3}, {"full": "BIOLOGIA", "short": "Biologia", "n": 3}, {"full": "FISICA", "short": "Fisica", "n": 1}, {"full": "ITALIANO", "short": "Italiano", "n": 1}, {"full": "STORIA", "short": "Storia", "n": 1}], "4PA": [{"full": "INGLESE", "short": "Inglese", "n": 2}, {"full": "MATEMATICA", "short": "Matematica", "n": 1}, {"full": "CHIMICA", "short": "Chimica", "n": 1}, {"full": "PRODUZIONI ANIMALI", "short": "Prod. Animali", "n": 1}, {"full": "ECOLOGIA", "short": "Ecologia", "n": 1}, {"full": "ESERC.AGRARIE", "short": "Eserc. Agrarie", "n": 1}, {"full": "ES.AGR.ALTERNANZA", "short": "Es.Agr.Alternanza", "n": 1}], "4PB": [{"full": "CHIMICA", "short": "Chimica", "n": 3}, {"full": "MATEMATICA", "short": "Matematica", "n": 2}]}, "annoMap": {"1PA": "Classi Prime", "1PB": "Classi Prime", "1PC": "Classi Prime", "2PA": "Classi Seconde", "2PB": "Classi Seconde", "3PA": "Classi Terze", "3PB": "Classi Terze", "3PC": "Classi Terze", "4PA": "Classi Quarte", "4PB": "Classi Quarte"}, "kpi": {"totale": 144, "ammessiSenzaDebiti": 68, "ammessiConDebiti": 73, "nonAmmessi": 3, "ritirati": 5, "totIns_q2": 175, "totIns_q1": 316}};
+
+(function(){
+  const box = document.getElementById('particles');
+  const N = 24;
+  for(let i=0;i<N;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 3 + Math.random()*6;
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.left = Math.random()*100+'%';
+    p.style.bottom = (-10 - Math.random()*20)+'%';
+    const dur = 16 + Math.random()*16;
+    p.style.animationDuration = dur+'s';
+    p.style.animationDelay = (-Math.random()*dur)+'s';
+    box.appendChild(p);
+  }
+})();
+
+function showTab(name){
+  document.getElementById('tab-finale').classList.toggle('active', name==='finale');
+  document.getElementById('tab-confronto').classList.toggle('active', name==='confronto');
+  document.getElementById('tabbtn-finale').classList.toggle('active', name==='finale');
+  document.getElementById('tabbtn-confronto').classList.toggle('active', name==='confronto');
+  Highcharts.charts.forEach(c => { if(c) c.reflow(); });
+}
+
+const COL_SD='#34d399', COL_CD='#fb923c', COL_NON='#f87171', COL_RIT='#94a3b8', COL_Q1='#5eead4';
+const AMBER='#fbbf24', TEAL='#2dd4bf', ROSE='#fb7185';
+const FONT = "'Inter', sans-serif";
+const TXT='#f3fffb', MUTED='#cdeee8';
+
+function grad(c1,c2,vertical){
+  return { linearGradient: vertical ? {x1:0,y1:0,x2:0,y2:1} : {x1:0,y1:0,x2:1,y2:0}, stops:[[0,c1],[1,c2]] };
+}
+
+Highcharts.setOptions({
+  chart:{backgroundColor:'transparent', style:{fontFamily:FONT, color:TXT}},
+  credits:{enabled:false},
+  title:{text:null},
+  colors:[COL_SD, COL_CD, COL_NON, COL_RIT],
+  xAxis:{labels:{style:{color:TXT,fontWeight:'600'}}, lineColor:'rgba(255,255,255,.22)', gridLineColor:'rgba(255,255,255,.10)'},
+  yAxis:{labels:{style:{color:TXT,fontWeight:'600'}}, gridLineColor:'rgba(255,255,255,.10)', title:{style:{color:MUTED}}},
+  legend:{itemStyle:{color:TXT, fontWeight:'700'}, itemHoverStyle:{color:'#fff'}},
+  tooltip:{backgroundColor:'rgba(10,25,28,.95)', borderColor:'rgba(45,212,191,.6)', style:{color:'#fff'}, borderRadius:10}
+});
+
+// 1. donut
+Highcharts.chart('chart-donut', {
+  chart:{type:'pie', options3d:{enabled:true, alpha:50, beta:0}},
+  tooltip:{pointFormat:'<b>{point.y}</b> studenti ({point.percentage:.1f}%)'},
+  plotOptions:{pie:{innerSize:'45%', depth:55, dataLabels:{enabled:true,format:'{point.name}<br><b>{point.percentage:.1f}%</b>',
+    style:{textOutline:'none',fontWeight:'700',fontSize:'12px',fontFamily:FONT,color:'#fff'}}, borderWidth:1, borderColor:'rgba(255,255,255,.3)'}},
+  series:[{name:'Studenti',colorByPoint:true,
+    data:[
+      {name:'Ammessi senza debiti', y:D.kpi.ammessiSenzaDebiti, color:grad('#34d399','#047857')},
+      {name:'Ammessi con debiti', y:D.kpi.ammessiConDebiti, color:grad('#fb923c','#c2410c')},
+      {name:'Non ammessi', y:D.kpi.nonAmmessi, color:grad('#f87171','#b91c1c')}
+    ]}]
+});
+
+// 2. classes percent stacked
+Highcharts.chart('chart-classes', {
+  chart:{type:'column'},
+  xAxis:{categories:D.classOrder, labels:{style:{fontSize:'12px'}}},
+  yAxis:{min:0, max:100, title:{text:'% studenti'}, labels:{format:'{value}%'}},
+  plotOptions:{column:{stacking:'percent', borderWidth:0, borderRadius:4}},
+  tooltip:{shared:true, pointFormat:'<b>{series.name}</b>: {point.y} studenti ({point.percentage:.0f}%)<br/>'},
+  series:[
+    {name:'Ammessi senza debiti', data:D.classOrder.map(c=>D.esitiByClass[c].AMMESSO_SENZA_DEBITI), color:grad('#34d399','#065f46',true)},
+    {name:'Ammessi con debiti', data:D.classOrder.map(c=>D.esitiByClass[c].AMMESSO_CON_DEBITI), color:grad('#fb923c','#9a3412',true)},
+    {name:'Non ammessi', data:D.classOrder.map(c=>D.esitiByClass[c].NON_AMMESSO), color:grad('#f87171','#991b1b',true)}
+  ]
+});
+
+// 3. subjects
+const subjShort = D.subjRows.map(r=>r[1]);
+Highcharts.chart('chart-subjects', {
+  chart:{type:'bar'},
+  xAxis:{categories:subjShort, labels:{style:{fontSize:'11px'}}},
+  yAxis:{min:0, title:{text:'N. insufficienze'}},
+  plotOptions:{bar:{borderWidth:0, borderRadius:5}},
+  tooltip:{shared:true},
+  legend:{verticalAlign:'top'},
+  series:[
+    {name:'I quadrimestre (in itinere)', data:D.subjRows.map(r=>r[2]), color:grad('#5eead4','#0f766e')},
+    {name:'Debiti a scrutinio finale', data:D.subjRows.map(r=>r[3]), color:grad('#fb923c','#9a3412')}
+  ]
+});
+
+// 4. anno
+const annoNames = Object.keys(D.byAnno);
+Highcharts.chart('chart-anno', {
+  chart:{type:'column'},
+  xAxis:{categories:annoNames},
+  yAxis:{min:0, max:100, title:{text:'% studenti'}, labels:{format:'{value}%'}},
+  plotOptions:{column:{stacking:'percent', borderWidth:0, borderRadius:5}},
+  tooltip:{shared:true, pointFormat:'<b>{series.name}</b>: {point.y} studenti ({point.percentage:.0f}%)<br/>'},
+  series:[
+    {name:'Ammessi senza debiti', data:annoNames.map(k=>D.byAnno[k].AMMESSO_SENZA_DEBITI), color:COL_SD},
+    {name:'Ammessi con debiti', data:annoNames.map(k=>D.byAnno[k].AMMESSO_CON_DEBITI), color:COL_CD},
+    {name:'Non ammessi', data:annoNames.map(k=>D.byAnno[k].NON_AMMESSO), color:COL_NON}
+  ]
+});
+
+// 5. sezione
+const sezNames = Object.keys(D.bySezione);
+Highcharts.chart('chart-sezione', {
+  chart:{type:'bar'},
+  xAxis:{categories:sezNames.map(s=>'Sezione '+s)},
+  yAxis:{min:0, max:100, title:{text:'% studenti'}, labels:{format:'{value}%'}},
+  plotOptions:{bar:{stacking:'percent', borderWidth:0, borderRadius:4}},
+  tooltip:{shared:true, pointFormat:'<b>{series.name}</b>: {point.y} studenti ({point.percentage:.0f}%)<br/>'},
+  series:[
+    {name:'Ammessi senza debiti', data:sezNames.map(k=>D.bySezione[k].AMMESSO_SENZA_DEBITI), color:COL_SD},
+    {name:'Ammessi con debiti', data:sezNames.map(k=>D.bySezione[k].AMMESSO_CON_DEBITI), color:COL_CD},
+    {name:'Non ammessi', data:sezNames.map(k=>D.bySezione[k].NON_AMMESSO), color:COL_NON}
+  ]
+});
+
+// 6. n debiti
+const ndKeys = Object.keys(D.nDebitiDistrib).map(Number).sort((a,b)=>a-b);
+Highcharts.chart('chart-ndebiti', {
+  chart:{type:'column'},
+  xAxis:{categories:ndKeys.map(k=>k+(k===1?' materia':' materie')), title:{text:'Numero di materie con debito'}},
+  yAxis:{min:0, title:{text:'N. studenti'}},
+  legend:{enabled:false},
+  plotOptions:{column:{borderWidth:0, borderRadius:6, colorByPoint:true}},
+  colors:ndKeys.map(k => k<=2 ? COL_CD : COL_NON),
+  series:[{name:'Studenti', data:ndKeys.map(k=>D.nDebitiDistrib[k])}]
+});
+
+// class cards
+const classCardsBox = document.getElementById('class-cards');
+D.classOrder.forEach(c => {
+  const e = D.esitiByClass[c];
+  const tot = e.AMMESSO_SENZA_DEBITI + e.AMMESSO_CON_DEBITI + e.NON_AMMESSO;
+  const pSD = tot ? Math.round(e.AMMESSO_SENZA_DEBITI/tot*100) : 0;
+  const pCD = tot ? Math.round(e.AMMESSO_CON_DEBITI/tot*100) : 0;
+  const pN = tot ? Math.round(e.NON_AMMESSO/tot*100) : 0;
+  const subj = D.classSubjectDebiti[c] || [];
+  const subjHtml = subj.length
+    ? '<p class="cc-subjlist">' + subj.map(s => '<b>'+s.short+'</b> ('+s.n+')').join(' &middot; ') + '</p>'
+    : '<p class="cc-empty"><i class="fas fa-check"></i> Nessun debito in classe</p>';
+  const pctColor = pN>0 ? COL_NON : (pCD>40 ? COL_CD : COL_SD);
+  const card = document.createElement('div');
+  card.className = 'class-card';
+  card.innerHTML =
+    '<div class="cc-head"><h4>'+c+'</h4><span class="cc-pct" style="color:'+pctColor+'">'+(pCD+pN)+'% con debito</span></div>'+
+    '<div class="cc-ind">'+(D.annoMap[c]||'')+' &middot; '+tot+' studenti'+(e.RITIRATO?(' &middot; '+e.RITIRATO+' ritirati'):'')+'</div>'+
+    '<div class="cc-badges">'+
+      '<span class="badge badge-sd">'+pSD+'% senza debiti</span>'+
+      '<span class="badge badge-cd">'+pCD+'% con debiti</span>'+
+      (pN>0 ? '<span class="badge badge-non">'+pN+'% non amm.</span>' : '')+
+    '</div>'+
+    '<div class="bar-mini" style="margin-bottom:10px;">'+
+      '<div style="width:'+pSD+'%;background:'+COL_SD+'"></div>'+
+      '<div style="width:'+pCD+'%;background:'+COL_CD+'"></div>'+
+      '<div style="width:'+pN+'%;background:'+COL_NON+'"></div>'+
+    '</div>'+
+    subjHtml;
+  classCardsBox.appendChild(card);
+});
+
+// summary table
+const tbl = document.getElementById('class-table');
+tbl.innerHTML = '<thead><tr><th>Classe</th><th>Studenti</th><th>Senza debiti</th><th>%</th><th>Con debiti</th><th>%</th><th>Non amm.</th><th>%</th><th>% con debito</th><th>N. debiti tot.</th></tr></thead><tbody></tbody>';
+D.classOrder.forEach(c => {
+  const e = D.esitiByClass[c];
+  const tot = e.AMMESSO_SENZA_DEBITI + e.AMMESSO_CON_DEBITI + e.NON_AMMESSO;
+  const pSD = tot ? Math.round(e.AMMESSO_SENZA_DEBITI/tot*100) : 0;
+  const pCD = tot ? Math.round(e.AMMESSO_CON_DEBITI/tot*100) : 0;
+  const pN = tot ? Math.round(e.NON_AMMESSO/tot*100) : 0;
+  const pctDebito = pCD+pN;
+  const tr = document.createElement('tr');
+  tr.innerHTML = '<td class="cl">'+c+'</td>'+
+    '<td>'+tot+'</td>'+
+    '<td><span class="badge badge-sd">'+e.AMMESSO_SENZA_DEBITI+'</span></td>'+
+    '<td class="pct">'+pSD+'%</td>'+
+    '<td><span class="badge badge-cd">'+e.AMMESSO_CON_DEBITI+'</span></td>'+
+    '<td class="pct">'+pCD+'%</td>'+
+    '<td><span class="badge badge-non">'+e.NON_AMMESSO+'</span></td>'+
+    '<td class="pct">'+pN+'%</td>'+
+    '<td class="pct" style="color:'+(pctDebito>50?COL_NON:(pctDebito>25?COL_CD:COL_SD))+'">'+pctDebito+'%</td>'+
+    '<td>'+D.q2ByClass[c]+'</td>';
+  tbl.querySelector('tbody').appendChild(tr);
+});
+
+// ===== TAB 2 =====
+const top6 = D.subjFull.slice(0,6);
+Highcharts.chart('chart-area', {
+  chart:{type:'area'},
+  xAxis:{categories:['I Quadrimestre','II Quadrimestre']},
+  yAxis:{min:0, title:{text:'N. insufficienze'}},
+  plotOptions:{area:{fillOpacity:0.16, marker:{enabled:true,radius:4}, lineWidth:3}},
+  tooltip:{shared:true},
+  colors:[AMBER, TEAL, ROSE, COL_CD, COL_SD, '#f87171'],
+  series:top6.map(r => ({name:r.short, data:[r.q1, r.q2]}))
+});
+
+Highcharts.chart('chart-classcompare', {
+  chart:{type:'column'},
+  xAxis:{categories:D.classOrder},
+  yAxis:{min:0, title:{text:'N. insufficienze / debiti'}},
+  plotOptions:{column:{borderWidth:0, borderRadius:5}},
+  tooltip:{shared:true},
+  series:[
+    {name:'I quadrimestre (in itinere)', data:D.classOrder.map(c=>D.q1ByClass[c]||0), color:grad('#5eead4','#0f766e')},
+    {name:'Debiti a scrutinio finale', data:D.classOrder.map(c=>D.q2ByClass[c]||0), color:grad('#fb923c','#9a3412')}
+  ]
+});
+
+const ctbl = document.getElementById('compare-table');
+ctbl.innerHTML = '<thead><tr><th>Classe</th><th>I Quadrimestre</th><th>Debiti finali</th><th>Variazione</th><th>% Variazione</th></tr></thead><tbody></tbody>';
+D.classOrder.forEach(c => {
+  const q1 = D.q1ByClass[c]||0, q2 = D.q2ByClass[c]||0;
+  const delta = q2-q1;
+  const pctVar = q1>0 ? Math.round(delta/q1*100) : 0;
+  const color = delta<0 ? COL_SD : (delta===0 ? COL_CD : COL_NON);
+  const tr = document.createElement('tr');
+  tr.innerHTML = '<td class="cl">'+c+'</td>'+
+    '<td>'+q1+'</td>'+
+    '<td>'+q2+'</td>'+
+    '<td style="color:'+color+';font-weight:700">'+(delta>0?'+':'')+delta+'</td>'+
+    '<td style="color:'+color+';font-weight:700">'+(pctVar>0?'+':'')+pctVar+'%</td>';
+  ctbl.querySelector('tbody').appendChild(tr);
+});
+</script>
+</body>
+</html>
